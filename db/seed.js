@@ -1,36 +1,34 @@
 const fs = require('fs');
-const db = require('./connection')
+const pool = require('./connection')
 const copyFrom = require('pg-copy-streams').from;
 const usersFile = './db/users.csv'
 const itemsFile = './db/items.csv'
 
 // Clear the table data and seed data from CSV
-db.connect((err, client, done) => {
+pool.connect((err, client, done) => {
   client.query('DELETE FROM users;')
         .then(res => {
-          console.log('Users data deleted')
+          console.log('User table data deleted')
           const stream = client.query(copyFrom('COPY users FROM STDIN CSV HEADER;'))
           const fileStream = fs.createReadStream(usersFile)
-          fileStream.on('error', done)
-          stream.on('error', done)
-          stream.on('end', done)
+          fileStream.on('error', err => { console.error(err); done() })
+          stream.on('error', err => { console.error(err); done() })
+          stream.on('end', () => { console.log('Users inserted'); done() })
           fileStream.pipe(stream)
-          console.log('Users table seeded')
         })
-        .catch(err => console.log(err))
+        .catch(err => { console.log(err); done })
 })
 
-db.connect((err, client, done) => {
+pool.connect((err, client, done) => {
   client.query('DELETE FROM items;')
         .then(res => {
-          console.log('Items data deleted')
+          console.log('Item table data deleted')
           const stream = client.query(copyFrom('COPY items FROM STDIN CSV HEADER;'))
           const fileStream = fs.createReadStream(itemsFile)
-          fileStream.on('error', done)
-          stream.on('error', done)
-          stream.on('end', done)
+          fileStream.on('error', err => { console.error(err); done() })
+          stream.on('error', err => { console.error(err); done() })
+          stream.on('end', () => { console.log('Items inserted'); done() })
           fileStream.pipe(stream)
-          console.log('Items table seeded')
         })
-        .catch(err => console.log(err))
+        .catch(err => { console.log(err); done })
 })

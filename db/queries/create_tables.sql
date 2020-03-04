@@ -1,3 +1,6 @@
+DROP TABLE users;
+DROP TABLE items;
+
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY, 
   first_name VARCHAR(100) NOT NULL, 
@@ -6,8 +9,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS items (
   id INTEGER PRIMARY KEY,
-  item_name VARCHAR(100) NOT NULL,
-  daily_price_pence NUMERIC(2) NOT NULL,
-  img_url VARCHAR(100),
+  item_name VARCHAR(300) NOT NULL,
+  daily_price_pence FLOAT(2),
+  img_url VARCHAR(300),
   user_id INTEGER NOT NULL
-)
+);
