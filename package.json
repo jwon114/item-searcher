@@ -1,0 +1,27 @@
+{
+  "name": "item-searcher",
+  "version": "1.0.0",
+  "description": "## Introduction",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node db/seed.js",
+    "setup": "node db/setup.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwon114/item-searcher.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwon114/item-searcher/issues"
+  },
+  "homepage": "https://github.com/jwon114/item-searcher#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^7.18.2",
+    "pg-copy-streams": "^2.2.2"
+  }
+}

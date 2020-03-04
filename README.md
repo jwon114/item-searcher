@@ -1,3 +1,12 @@
+## Introduction
+
+## Setup
+- Run psql and create database in Postgres with CREATE DATABASE [DBNAME]
+- 
+
+
+
+
 # Backend Challenge
 
 ## Introduction
