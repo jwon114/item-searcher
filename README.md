@@ -2,7 +2,7 @@
 
 ## Setup
 - Run psql and create database in Postgres with CREATE DATABASE [DBNAME]
-- 
+- Create .env file with database connection credentials
 
 
 

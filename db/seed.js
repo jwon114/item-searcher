@@ -1,10 +1,10 @@
 const fs = require('fs');
 const pool = require('./connection')
 const copyFrom = require('pg-copy-streams').from;
-const usersFile = './db/users.csv'
-const itemsFile = './db/items.csv'
+const usersFile = './db/data/users.csv'
+const itemsFile = './db/data/items.csv'
 
-// Clear the table data and seed data from CSV
+// Clear the table data and insert seed data from CSV files
 pool.connect((err, client, done) => {
   client.query('DELETE FROM users;')
         .then(res => {
@@ -16,7 +16,7 @@ pool.connect((err, client, done) => {
           stream.on('end', () => { console.log('Users inserted'); done() })
           fileStream.pipe(stream)
         })
-        .catch(err => { console.log(err); done })
+        .catch(err => { console.log(err); done() })
 })
 
 pool.connect((err, client, done) => {
@@ -30,5 +30,5 @@ pool.connect((err, client, done) => {
           stream.on('end', () => { console.log('Items inserted'); done() })
           fileStream.pipe(stream)
         })
-        .catch(err => { console.log(err); done })
+        .catch(err => { console.log(err); done() })
 })
