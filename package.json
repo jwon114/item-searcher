@@ -4,7 +4,8 @@
   "description": "## Introduction",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/server.js",
+    "debug": "nodemon --inspect src/server.js",
     "test": "jest",
     "seed": "node db/seed.js"
   },
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
     "supertest": "^4.0.2"
   },
   "jest": {

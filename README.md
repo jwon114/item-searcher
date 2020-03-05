@@ -3,9 +3,10 @@
 ## Setup
 - Run psql and create database in Postgres with CREATE DATABASE [DBNAME]
 - Create .env file with database connection credentials
+- Run seed file to import data from CSV files
 
-
-
+## Testing
+- Jest, Supertest for endpoint testing and HTTP assertions 
 
 # Backend Challenge
 

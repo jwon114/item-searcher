@@ -1,8 +1,10 @@
+const searchItems = require('../../../db/searchItems')
+
 const search = (req, res) => {
   let status, response = {}
   if (req.query.searchTerm) {
     status = 200
-    response["result"] = search(req.query.searchTerm)
+    response["result"] = searchItems(req.query.searchTerm)
   } else {
     status = 400
     response["error"] = 'Required query param missing'
