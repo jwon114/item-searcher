@@ -7,7 +7,7 @@ const search = (req, res) => {
     response["status"] = status
     response["error"] = 'Required query param missing'
     res.status(status)
-    res.send(response)
+    res.json(response)
   }
 
   searchItems(req.query.searchTerm)
@@ -16,7 +16,7 @@ const search = (req, res) => {
       response["status"] = status
       response["result"] = result.rows
       res.status(status)
-      res.send(response)
+      res.json(response)
     })
     .catch(e => console.error(e))
 }
