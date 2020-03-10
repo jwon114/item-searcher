@@ -1,7 +1,5 @@
-const pool = require('./connection')
-
-const searchItems = (searchTerm) => {
-  const query = {
+const searchItemsQuery = (searchTerm) => {
+  return {
     text: `SELECT users.id, 
                   users.first_name, 
                   users.city, 
@@ -13,8 +11,6 @@ const searchItems = (searchTerm) => {
           WHERE items.item_name ~* $1 LIMIT 20;`,
     values: [`\\y${searchTerm}\\y`]
   }
-
-  return pool.query(query)
 }
 
-module.exports = searchItems
+module.exports = searchItemsQuery

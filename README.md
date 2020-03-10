@@ -1,12 +1,28 @@
 ## Introduction
+This is an application that serves a API endpoint that will return the most appropriate 20 items from a CSV file dataset. The `Get /search` endpoint will be given a `searchTerm`, e.g. `/search?searchTerm=camera`. The items returned must contain the owner's information so it can be correctly displayed to a frontend.
+
+## Approach
+Write brief summary on the approach you took and the tools you used (max 500 words)
+My aim was to build a simple and concise node application without the extra unnecessary tools and libraries.
+
+The first challenge was tackling data read and storage. The CSV files not only provided the data, but an insight into the table structure required. I knew I wanted to store the data for fast and easy read access, so I chose a familiar DBMS in Postgresql. I wrote an SQL script to create the tables and utilised the pg package to interface with Postgresql. The pg-copy-streams package was then used to read/write from CSV into the database.
+
+Once the data was in the database, I used the Express web framework to create the skeleton of the application. A single controller to handle the search endpoint request.
 
 ## Setup
+- npm install node modules
 - Run psql and create database in Postgres with CREATE DATABASE [DBNAME]
 - Create .env file with database connection credentials
 - Run seed file to import data from CSV files
 
 ## Testing
 - Jest, Supertest for endpoint testing and HTTP assertions 
+
+## Technologies
+- Node, Express
+- Postgresql
+- Jest, Supertest
+
 
 # Backend Challenge
 
