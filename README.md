@@ -21,7 +21,7 @@ Once the data was in the database, I used the **Express** web framework to creat
 - Install Postgresql if you haven't already. https://www.postgresql.org/download/
 - Create a database in Postgresql, the database name will be used later in the environment file.
 ```
-CREATE DATABASE [DBNAME]
+CREATE DATABASE [DBNAME];
 ```
 - Create .env file in root directory with the following database connection variables including the newly created database name. PGHOST defaults to 'localhost', PGPORT defaults to 5432. Reference: https://www.postgresql.org/docs/9.3/libpq-envars.html
 ```
@@ -39,6 +39,12 @@ PGUSER='James'
 PGDATABASE='item_searcher'
 PGPASSWORD=null
 PGPORT=5432
+```
+- Run the create tables SQL script in the db/sql folder of the project. For *psql* terminal, connect to the database and execute the script using the include command.
+```
+psql
+\c [DBNAME]
+\i db/sql/create_tables.sql
 ```
 ## Application
 - Install project dependencies
