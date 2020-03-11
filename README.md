@@ -10,9 +10,10 @@ I decided to use plain SQL instead of an ORM because I felt it was not required 
 
 Once the data was in the database, I used the **Express** web framework to create the skeleton of the application. A single controller to handle the search endpoint request and query the database with the search keyword query parameter. I tested this controller's endpoint using the **Jest** testing framework and **Supertest** for HTTP assertions.
 
-Points of failure
+## Points of failure
 - The search uses regular expression matching of string and does not have the ability to identify branding or associated items. For example, searching for *camera* will not return branded items such as *Canon* or *Nikon*.
-- There is no order or sorting of any kind when returning results. The order of the results is not guaranteed
+- The order of the results is not guaranteed.
+- Query parameters only handles a single key in *searchTerm* and a single value. Anything other than this will fail to return a result.
 
 # Setup
 - Clone or download the repository
