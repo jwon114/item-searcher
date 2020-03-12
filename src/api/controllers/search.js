@@ -11,7 +11,6 @@ const search = (req, res) => {
       response["status"] = status
       response["result"] = result.rows
       res.status(status).json(response)
-      await pool.end()
     })().catch(error => console.log(error))
   } else {
     status = 400

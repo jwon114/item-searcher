@@ -15,7 +15,8 @@ describe("Search Controller", () => {
     const searchResult = await request(app)
       .get('/search')
       .query({ searchTerm: 'camera' })
-      .expect(200)
+    
+    expect(searchResult.statusCode).toBe(200)
     expect(searchResult.body.result.length).toBe(20)
     expect(searchResult.body.result[0]).toMatchObject(expectedItemObject)
   })
@@ -23,7 +24,8 @@ describe("Search Controller", () => {
   test('Should respond with 400 when no query params provided', async () => {
     const searchResult = await request(app)
       .get('/search')
-      .expect(400)
+    
+    expect(searchResult.statusCode).toBe(400)
     expect(searchResult.body).toHaveProperty('error')
     expect(searchResult.body.error).toBe('Required query param searchTerm missing')
   })
