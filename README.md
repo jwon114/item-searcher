@@ -40,7 +40,7 @@ PGDATABASE='item_searcher'
 PGPASSWORD=null
 PGPORT=5432
 ```
-- Run the create tables SQL script in the db/sql folder of the project. For *psql* terminal, connect to the database and execute the script using the include command.
+- Run the create tables SQL script in the db/sql folder of the project. For *psql* terminal, within the project folder connect to the database and execute the script using the include command.
 ```
 psql
 \c [DBNAME]

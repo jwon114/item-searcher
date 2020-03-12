@@ -4,31 +4,30 @@ const copyFrom = require('pg-copy-streams').from;
 const usersFile = './db/data/users.csv'
 const itemsFile = './db/data/items.csv'
 
-// Clear the table data and insert seed data from CSV files
-pool.connect((err, client, done) => {
-  client.query('DELETE FROM users;')
-        .then(res => {
-          console.log('User table data deleted')
-          const stream = client.query(copyFrom('COPY users FROM STDIN CSV HEADER;'))
-          const fileStream = fs.createReadStream(usersFile)
-          fileStream.on('error', err => { console.error(err); done() })
-          stream.on('error', err => { console.error(err); done() })
-          stream.on('end', () => { console.log('Users inserted'); done() })
-          fileStream.pipe(stream)
-        })
-        .catch(err => { console.log(err); done() })
-})
+const deleteTableData = async (table, client) => {
+  await client.query(`DELETE FROM ${table}`)
+  console.log(`${table} table data deleted`)
+}
 
-pool.connect((err, client, done) => {
-  client.query('DELETE FROM items;')
-        .then(res => {
-          console.log('Item table data deleted')
-          const stream = client.query(copyFrom('COPY items FROM STDIN CSV HEADER;'))
-          const fileStream = fs.createReadStream(itemsFile)
-          fileStream.on('error', err => { console.error(err); done() })
-          stream.on('error', err => { console.error(err); done() })
-          stream.on('end', () => { console.log('Items inserted'); done() })
-          fileStream.pipe(stream)
-        })
-        .catch(err => { console.log(err); done() })
-})
+const insertFromCSV = (table, csv, client) => {
+  const stream = client.query(copyFrom(`COPY ${table} FROM STDIN CSV HEADER;`))
+  const fileStream = fs.createReadStream(csv)
+  fileStream.on('error', err => { console.error(err) })
+  stream.on('error', err => { console.error(err) })
+  stream.on('end', () => { console.log(`${table} inserted`) })
+  fileStream.pipe(stream)
+}
+
+// Clear the table data and insert seed data from CSV files
+;(async () => {
+  const client = await pool.connect()
+  try {
+    deleteTableData('users', client)
+    deleteTableData('items', client)
+
+    insertFromCSV('users', usersFile, client)
+    insertFromCSV('items', itemsFile, client)
+  } finally {
+    client.release()
+  }
+})().catch(err => console.log(err))

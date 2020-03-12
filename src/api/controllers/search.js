@@ -5,14 +5,14 @@ const search = (req, res) => {
   let status, response = {}
   const { searchTerm } = req.query
   if (searchTerm) {
-    pool.query(searchItemsQuery(searchTerm))
-        .then(result => {
-          status = 200
-          response["status"] = status
-          response["result"] = result.rows
-          res.status(status).json(response)
-        })
-        .catch(e => console.error(e))
+    ;(async () => {
+      const result = await pool.query(searchItemsQuery(searchTerm))
+      status = 200
+      response["status"] = status
+      response["result"] = result.rows
+      res.status(status).json(response)
+      await pool.end()
+    })().catch(error => console.log(error))
   } else {
     status = 400
     response["status"] = status

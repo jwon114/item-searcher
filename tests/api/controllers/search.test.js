@@ -2,7 +2,7 @@ const request = require('supertest')
 const app = require('../../../src/app')
 
 describe("Search Controller", () => {
-  test('Should respond with 200 and 20 results when provided with query params', () => {
+  test('Should respond with 200 and 20 results when provided with query params', async () => {
     const expectedItemObject = {
       user_id: expect.any(Number),
       first_name: expect.any(String),
@@ -12,23 +12,19 @@ describe("Search Controller", () => {
       img_url: expect.any(String)
     }
     
-    return request(app)
+    const searchResult = await request(app)
       .get('/search')
-      .query({ searchTerm: 'camera'})
+      .query({ searchTerm: 'camera' })
       .expect(200)
-      .then(res => {
-        expect(res.body.result.length).toBe(20)
-        expect(res.body.result[0]).toMatchObject(expectedItemObject)
-      })
+    expect(searchResult.body.result.length).toBe(20)
+    expect(searchResult.body.result[0]).toMatchObject(expectedItemObject)
   })
 
-  test('Should respond with 400 when no query params provided', () => {
-    return request(app)
+  test('Should respond with 400 when no query params provided', async () => {
+    const searchResult = await request(app)
       .get('/search')
       .expect(400)
-      .then(res => {
-        expect(res.body).toHaveProperty('error')
-        expect(res.body.error).toBe('Required query param searchTerm missing')
-      })
+    expect(searchResult.body).toHaveProperty('error')
+    expect(searchResult.body.error).toBe('Required query param searchTerm missing')
   })
 })
