@@ -2,11 +2,11 @@
 This is an application that serves a API endpoint that will return the most appropriate 20 items from a CSV file dataset. The `Get /search` endpoint will be given a `searchTerm`, e.g. `/search?searchTerm=camera`. The items returned must contain the owner's information so it can be correctly displayed to a frontend.
 
 # Approach
-My approach to building a simple and concise node application without the unnecessary tools and libraries.
+My approach to building a simple and concise node application that serves data through a search endpoint.
 
-The first challenge tackling data reading and storage. The database table structures required could be found within the CSV data files. I wanted to store the data for fast and easy read access, so I chose a familiar DBMS in **Postgresql**. Database tables were created when executing a SQL script while connected to the database. The packages **pg** to interface with Postgresql and **pg-copy-streams** to read/write from CSV to the database.
+The first challenge was tackling data reading and storage. To find out how the database tables were structured, a look into the CSV data files provided all the information needed. I wanted to store the data for fast and easy read access, so I chose a familiar DBMS in **Postgresql**. Tables were created with a SQL script while connected to the database. The packages **pg** to interface with Postgresql and **pg-copy-streams** to read from CSV and write to the database.
 
-The decision to use plain SQL instead of an ORM followed the idea of a simple application and using the right tools for the task at hand. The item search query joins the User and Items tables based on the User ID, and searches the item name with a case insensitive regular expression. The expression uses word boundaries so only if the exact word is found. For example, *camera* vs. *cameraplus*. Only items with name *camera* but not *cameraplus*.
+The decision to use plain SQL instead of an ORM because of it's simplicity and the using the appropriate tools for the task at hand. The item search query joins the User and Items tables based on the User ID, and searches the item name with a case insensitive regular expression. The expression uses word boundaries so only if the exact word is found. For example, *camera* vs. *cameraplus*. Only items with name *camera* but not *cameraplus*.
 
 Once the data was inserted into the database, the **Express** web framework was used to create the skeleton of the application. A single controller to handle the search request and query the database with the search keyword query parameter. Testing this controller's endpoint with the **Jest** testing framework and **Supertest** for HTTP assertions.
 
@@ -14,6 +14,10 @@ Once the data was inserted into the database, the **Express** web framework was 
 - The search uses regular expression matching of string and does not have the ability to identify branding or associated items. For example, searching for *camera* will not return branded items such as *Canon* or *Nikon*.
 - The order of the results is not guaranteed.
 - Query parameters only handles a single key in *searchTerm* and a single value. Anything other than this will fail to return a result.
+
+## Performance
+- Use of *pg* pooling for frequent queries to the database.
+- Have not tested API under load.
 
 # Setup
 - Clone or download the repository
